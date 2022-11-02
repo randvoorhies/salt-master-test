@@ -39,6 +39,34 @@ The robot's version can then be specified in a pillar (see `srv/pillar/versions.
 
 This seems to be a little bit of an abuse of the way Salt renders templates, but any downsides remain to be seen.
 
+### Running this test
+
+This repository has a full working test of the concept. To run it, run:
+
+```bash
+# Build the salt-master and robot-1/2 docker containers
+docker-compose build
+# Bring up both the salt-master and robot containers
+docker-compose up
+```
+
+And in a separate terminal:
+```bash
+# Get a Bash shell into the salt-master host
+docker-compose exec salt-master bash
+
+# Apply the state to both robot minions
+salt '*' state.apply
+```
+
+Verify that the correct version got applied to each robot:
+```bash
+docker-compose exec robot-1 cat salt-robot-version-file
+docker-compose exec robot-2 cat salt-robot-version-file
+```
+
+Now, you can feel free to modify the `versions.sls` file to change the config versions for each robot, and then re-run `salt '*' state.apply` in the master to deploy the change.
+
 ### Future Work
 
 Assuming this all works out, we'll need to:
