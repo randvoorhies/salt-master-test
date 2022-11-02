@@ -67,4 +67,5 @@ Assuming this all works out, we'll need to:
 - Build a way to load the pillar data that's currently in `versions.sls` from the robot management database instead.
 - Figure out how to query what version has been installed on a robot.
     - This could be as simple as writing a `version.txt` file as part of the config process and possibly loading it as a custom grain.
+- Determine a good way to bootstrap existing robots in the field with the salt-minion
 
