@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  salt-master:
+    build:
+      context: .
+      dockerfile: Dockerfile.master
+    hostname: salt-master
+    volumes:
+      - "./master:/etc/salt/master"
+      - "./srv/salt:/srv/salt"
+      - "./srv/pillar:/srv/pillar"
+
+  robot-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.minion
+    hostname: robot-1
+    depends_on:
+      - salt-master
+
+  robot-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.minion
+    hostname: robot-2
+    depends_on:
+      - salt-master
