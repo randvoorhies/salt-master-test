@@ -47,20 +47,12 @@ This repository has a full working test of the concept. To run it, run:
 # Build the salt-master and robot-1/2 docker containers
 docker-compose build
 # Bring up both the salt-master and robot containers
-docker-compose up
-```
-
-And in a separate terminal:
-```bash
-# Get a Bash shell into the salt-master host
-docker-compose exec salt-master bash
+docker-compose up -d
 
 # Apply the state to both robot minions
-salt '*' state.apply
-```
+docker-compose exec salt-master salt '*' state.apply
 
-Verify that the correct version got applied to each robot:
-```bash
+# Verify that the correct version was applied to each robot
 docker-compose exec robot-1 cat salt-robot-version-file
 docker-compose exec robot-2 cat salt-robot-version-file
 ```
